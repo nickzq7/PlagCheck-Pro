@@ -1,254 +1,179 @@
-# 🔥 CHIMERA‑Hash Ultra
+# 🔍 PlagCheck Pro — Powered by CHIMERA-Hash v5
 
-> Sentence‑by‑Sentence Web Intelligence Plagiarism Engine
-> Fully Local • No API Keys • Full‑Page Source Extraction • Hybrid Similarity Scoring
+**Sentence-Level Web Source Tracing & Deterministic Hybrid Similarity Engine**
 
----
+PlagCheck Pro is a fully local plagiarism detection system that performs exact sentence-by-sentence web search, downloads full source pages, and scores similarity using the research-grade **CHIMERA-Hash v5 hybrid model**.
 
-## 🚀 Official Project Name
-
-# **CHIMERA‑Hash Ultra: Deterministic Hybrid Similarity & Source Tracing Engine**
-
-A locally running plagiarism detection system that:
-
-* Splits text into individual sentences
-* Searches each sentence as an exact quoted phrase
-* Collects web search results from multiple engines
-* Downloads full page content from discovered sources
-* Scores similarity using a custom hybrid hashing model
-* Generates a visual sentence‑level heatmap
-
-No paid APIs. No external SaaS dependency. 100% executable from a single Python file.
+It is not a shallow cosine checker.  
+It is a deterministic multi-signal source tracing engine.
 
 ---
 
-# 🧠 Architecture Overview
+# 🧠 Core Philosophy
 
-CHIMERA‑Hash Ultra consists of three primary layers:
+Most plagiarism tools:
 
-## 1️⃣ Frontend Engine (Embedded HTML UI)
+- Use embeddings or TF-IDF
+- Depend on private corpora
+- Operate as black-box SaaS systems
+- Do not reveal scoring logic
 
-* Fully embedded inside `plagcheck.py`
-* Real‑time progress logs
-* Sentence‑level heatmap
-* Source ranking dashboard
-* Risk classification system
+PlagCheck Pro instead:
 
-## 2️⃣ Web Intelligence Layer
-
-* DuckDuckGo HTML scraping
-* Bing HTML scraping (fallback)
-* Wikipedia API search
-* Semantic Scholar API search
-* Full‑page content extraction
-* DOM cleaning and noise removal
-
-## 3️⃣ CHIMERA‑Hash v5 Similarity Core
-
-Hybrid deterministic scoring using:
-
-| Component        | Weight | Purpose                         |
-| ---------------- | ------ | ------------------------------- |
-| Vector Jaccard   | 0.35   | Token overlap similarity        |
-| Chaos Index      | 0.37   | Non‑linear hashed token mapping |
-| Bigram Cosine    | 0.18   | Character‑level similarity      |
-| Numeric Matching | 0.10   | Number consistency validation   |
-
-Additional Safeguards:
-
-* Longest Common Subsequence dampening
-* Short‑word asymmetry detection
-* Code‑pattern false positive suppression
-* Sliding window best‑match detection
-
-All scores normalized to range `[0, 1]`.
+- Searches each sentence independently as an exact quoted phrase
+- Fetches full webpage content (not just snippets)
+- Applies deterministic hybrid similarity scoring
+- Runs 100% locally
+- Produces interpretable structural signals
 
 ---
 
-# ⚙️ How It Works (Technical Flow)
+# 🏗 System Architecture
 
-1. User pastes text.
-2. Text is split into sentences.
-3. Each sentence ≥ 8 words is searched as an exact quoted phrase.
-4. Search engines return candidate URLs.
-5. Unique URLs are deduplicated.
-6. Full HTML page is fetched.
-7. Scripts, nav, footer, ads are removed.
-8. Main article content extracted.
-9. CHIMERA‑Hash similarity score computed.
-10. Top sources ranked and displayed.
+## 1️⃣ Sentence Intelligence Engine
 
-Time complexity roughly:
+- Text split into sentences
+- Sentences ≥ 8 words searched as exact quoted phrase
+- Uses DuckDuckGo HTML + Bing fallback
+- Deduplicates URLs
 
-O(S × E × F)
-
-Where:
-
-* S = number of sentences
-* E = search engines queried
-* F = fetched pages
+This allows original source tracing instead of approximate semantic guessing.
 
 ---
 
-# 📊 Similarity Interpretation Model
+## 2️⃣ Full Page Extraction Engine
 
-| Score     | Classification    | Meaning              |
-| --------- | ----------------- | -------------------- |
-| 0.85+     | High Plagiarism   | Direct match online  |
-| 0.65–0.84 | Likely Plagiarism | Strong similarity    |
-| 0.45–0.64 | Moderate Overlap  | Partial reuse        |
-| 0.20–0.44 | Minor Similarity  | Possible coincidence |
-| <0.20     | Appears Original  | No significant match |
+For every discovered URL:
 
-Sentence heatmap colors:
+- Fetch full HTML
+- Remove scripts, styles, nav, footer
+- Extract main article body
+- Normalize and clean text
 
-* 🔴 Very High (75%+)
-* 🟠 High (55–74%)
-* 🟡 Moderate (35–54%)
-* 🟢 Low
-* ⚪ Clean
+Prevents snippet bias and improves scoring precision.
 
 ---
 
-# 🛠 Installation
+## 3️⃣ CHIMERA-Hash v5 Similarity Core
 
-## Requirements
+Hybrid deterministic similarity model:
 
-* Python 3.9+
-* No external libraries required
+| Component | Weight | Function |
+|------------|--------|----------|
+| Vector Jaccard | 0.35 | Token overlap (≥4 chars) |
+| Chaos Index | 0.37 | Non-linear logistic map hashing |
+| Bigram Cosine | 0.18 | Character-level similarity |
+| Numeric Jaccard | 0.10 | Factual consistency validation |
 
-## Run
+### Logistic Map
+
+xₙ₊₁ = 3.9x(1 − x)
+
+Used for chaos-weighted token mapping.
+
+---
+
+## Advanced Safeguards
+
+- LCS structural dampening
+- SAUR (Short-Alpha-Unique Ratio) negation detection
+- Numeric mismatch penalty
+- Code pattern suppression
+- Sliding window best-match extraction
+
+Scores normalized to range [0, 1].
+
+---
+
+# 📊 Score Interpretation
+
+| Score | Verdict |
+|--------|----------|
+| ≥ 0.85 | High Plagiarism |
+| 0.65–0.84 | Likely Plagiarism |
+| 0.45–0.64 | Moderate Overlap |
+| 0.20–0.44 | Minor Similarity |
+| < 0.20 | Appears Original |
+
+Includes:
+- Sentence heatmap
+- High-risk sentence count
+- Ranked source list
+
+---
+
+# 🔬 Comparison With Other Tools
+
+| Feature | PlagCheck Pro | Turnitin | Grammarly | Copyscape | Embedding Models |
+|----------|---------------|----------|------------|------------|------------------|
+| Local Execution | ✅ Yes | ❌ No | ❌ No | ❌ No | ❌ No |
+| Sentence Exact Search | ✅ Yes | Partial | No | Limited | No |
+| Full Page Fetch | ✅ Yes | Unknown | No | No | No |
+| Transparent Scoring | ✅ Yes | ❌ Black box | ❌ Black box | ❌ Black box | ❌ Black box |
+| Corpus Required | ❌ No | ✅ Yes | ✅ Yes | ✅ Yes | ✅ Yes |
+| Numeric Variation Handling | ✅ Yes | Unknown | No | No | Weak |
+| Negation Detection | ✅ Yes | Unknown | No | No | No |
+
+PlagCheck Pro focuses on **traceable origin detection**, not only semantic similarity approximation.
+
+---
+
+# ⚙️ Run
 
 ```bash
 python plagcheck.py
 ```
 
-Then open:
-
+Open:
 ```
 http://localhost:7477
 ```
 
-The browser auto‑opens by default.
+---
+
+# 📈 Computational Model
+
+If:
+S = sentences  
+E = engines  
+F = fetched pages  
+
+Complexity ≈ O(S × E + F × L)
+
+Where L is processed page length.
 
 ---
 
-# 📂 Project Structure
+# 📚 Research Foundation
 
-```
-plagcheck.py
-└── Embedded UI (HTML + CSS + JS)
-└── Search Engine Layer
-    ├── DuckDuckGo HTML parser
-    ├── Bing HTML parser
-    ├── Wikipedia API
-    └── Semantic Scholar API
-└── Full Page Extraction Engine
-└── CHIMERA‑Hash v5 Similarity Core
-└── Local HTTP Server
-```
+Powered by:
 
-Single file deployment.
+**CHIMERA-Hash v5 — Hybrid Chaos-Weighted Similarity Model**
+
+DOI:
+https://doi.org/10.5281/zenodo.18824917  
+https://doi.org/10.5281/zenodo.18823652  
+
+Author: Manish Kumar Parihar  
+ORCID: https://orcid.org/0009-0002-1900-8945  
+YouTube: https://www.youtube.com/@ProgramDr  
+GitHub: https://github.com/nickzq7  
 
 ---
 
-# 🔬 Why CHIMERA‑Hash Is Different
+# 🔐 Security
 
-Unlike basic cosine similarity plagiarism tools, this system:
-
-✔ Searches sentence‑by‑sentence
-✔ Uses exact quoted phrase detection
-✔ Downloads full source content
-✔ Uses multi‑layer deterministic similarity
-✔ Penalizes false positives
-✔ Handles numeric consistency
-✔ Detects structural similarity
-✔ Avoids shallow keyword overlap bias
-
-This significantly reduces both:
-
-* Type I errors (false positives)
-* Type II errors (missed plagiarism)
+- 100% Localhost execution
+- No telemetry
+- No cloud storage
+- No external dependency
 
 ---
 
-# 🧩 Core Mathematical Components
+# 📜 License
 
-## Vector Jaccard
-
-J(A,B) = |A ∩ B| / |A ∪ B|
-
-Applied to tokens length ≥ 4.
-
-## Chaos Index
-
-Uses logistic map transformation:
-
-xₙ₊₁ = 3.9x(1 − x)
-
-Token hash buckets aggregated across multiple radii.
-
-## Bigram Cosine
-
-Character‑level similarity using cosine distance.
-
-## LCS Normalization
-
-Used to dampen artificially high overlaps.
+MIT License
 
 ---
 
-# 🌍 Ethical & Legal Notes
-
-* Designed for academic analysis and content originality validation.
-* Uses public search engines.
-* No API keys required.
-* Respects crawl pacing via delay throttling.
-
----
-
-# 🔐 Security Characteristics
-
-* No remote server dependency
-* No database storage
-* No data retention
-* Localhost only
-* No telemetry
-
-All analysis happens on the user machine.
-
----
-
-# 📈 Future Enhancements (Optional Roadmap)
-
-* Parallel sentence search
-* TF‑IDF adaptive weighting
-* Academic DOI resolution
-* PDF source extraction
-* Distributed crawling mode
-* API wrapper version
-
----
-
-# 👨‍💻 Author
-
-**Manish Kumar Parihar**
-YouTube: @ProgramDr
-Research: CHIMERA‑Hash Similarity Model
-
----
-
-# 🏁 Final Statement
-
-CHIMERA‑Hash Ultra is not a simple plagiarism checker.
-
-It is a deterministic hybrid similarity engine designed to identify exact origin sources using structural, lexical, numerical, and chaotic hash analysis.
-
-If you want a fully local, research‑grade plagiarism tracing engine — this is it.
-
----
-
-# ⭐ License
-
-MIT License (recommended)
-You may modify, distribute, and improve with attribution.
+PlagCheck Pro is a deterministic sentence-level source tracing engine powered by CHIMERA-Hash v5 — designed for researchers, educators, and developers who require mathematical transparency and reproducible similarity scoring.
