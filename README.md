@@ -176,4 +176,15 @@ MIT License
 
 ---
 
+```
+1. Idea - Manish Kumar Parihar
+2. Research - Manish Kumar Parihar
+3. Assembler - Manish Kumar Parihar
+4. Reasoning - Manish Kumar Parihar
+5. Quality Check - Manish Kumar Parihar
+6. Study - Manish Kumar Parihar
+7. Framework Design - Manish Kumar Parihar
+8. Coder - Prompt Engineering(75%) + Online Reference (10%) + Manish Kumar Parihar (15%)
+```
+
 PlagCheck Pro is a deterministic sentence-level source tracing engine powered by CHIMERA-Hash v5 — designed for researchers, educators, and developers who require mathematical transparency and reproducible similarity scoring.
